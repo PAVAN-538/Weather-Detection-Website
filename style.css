@@ -1,75 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
 body {
-    margin : 0;
-    padding: 0;
-    background-color: #1F1F1F;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.Container {
-    background-color: rgb(28, 27, 27);
-    text-align: center;
-    padding: 40px ;
-    
-    border-radius: 5px;
-    color: rgb(255, 255, 255);
-    /* max-height: 100vh; */
-    border-color: blue;
-    border-style: 5px solid ;
-    /* height : 300px */
-} 
-
-.heading {
-   /
+.container {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
-#todo-input {
-    padding: 7px;
-    margin: 5px;
-    background-color: #ffffff;
-   
-    
-}
-#todo-input:hover {
-    border-color: #086bff;
-}
-#todo-btn {
-    background-color:#1f1f1f;
-    padding: 7px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: aliceblue;
-    
+h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
-#todo-btn:hover {
-    background-color: blue;
-    cursor: pointer;
-}
-#todo-list  {
-    padding : 0;
-    list-style-type: none;
-    text-align: left;
-
-    background-color: rgb(23, 19, 19);
-    border-radius: 2px;
-    border : 2px rgb(255, 255, 255) solid 
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
- li {
-   padding: 10px;
-   gap: 10px;
-   
-  text-align: right ;
-}
-.delete-btn {
-    background-color: red;
-    text-align: right;
+input[type="text"] {
+  width: 70%;
+  padding: 10px;
+  background-color: #333333;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  outline: none;
 }
 
-#todo-list .delete-btn {
-    margin-left: 150px;
+button {
+  width: 25%;
+  padding: 10px;
+  background-color: #6200ea;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+button:hover {
+  background-color: #3700b3;
+}
+
+#weather-info {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+#error-message {
+  color: #ff5722;
+  margin-top: 20px;
+}
+

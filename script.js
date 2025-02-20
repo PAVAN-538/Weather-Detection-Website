@@ -1,60 +1,64 @@
-document.addEventListener("DOMContentLoaded",() => {
-    let input = document.getElementById("todo-input");
-    let button = document.getElementById("todo-btn");
-    let list = document.getElementById("todo-list");
+document.addEventListener("DOMContentLoaded", () => {
+  const cityInput = document.getElementById("city-input");
+  const getWeatherBtn = document.getElementById("get-weather-btn");
+  const weatherInfo = document.getElementById("weather-info");
+  const cityNameDisplay = document.getElementById("city-name");
+  const temperatureDisplay = document.getElementById("temperature");
+  const descriptionDisplay = document.getElementById("description");
+  const errorMessage = document.getElementById("error-message");
 
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  const API_KEY = "19de3233f9aca4c5d8161de42576fbe6";
 
-    tasks.forEach((test) => rendertask(test))
-
-    button.addEventListener("click", () => {
-      const TodoValue = input.value.trim();
-      if (TodoValue == "") {
-        return;
-      }
-
-      const newtask = {
-        id: Date.now(),
-        text: TodoValue,
-        completed: false,
-      };
-      tasks.push(newtask);
-      savetasks();
-      rendertask(newtask);
-      input.value = "";
-      console.log(tasks);
-    });
-
-    function rendertask(task) {
-      const li = document.createElement("li");
-      li.setAttribute("data-id", task.id);
-      if(task.completed)  li.classList.add("completed");
-      li.innerHTML = 
-      `<span>${task.text}</span>
-      <button class="delete-btn" back>delete</button>`;
-      
-
-      li.addEventListener("click", (e) => {
-        if(e.target.classList.contains("delete-btn")) return;
-        task.completed = !task.completed;
-        li.classList.toggle("completed");
-        
-        savetasks();
+  getWeatherBtn.addEventListener("click", async () => {
+    const city = cityInput.value.trim();
     
+    console.log(city);
+    if (!city) return;
 
-   
-      });
-        li.querySelector(".delete-btn")
-        .addEventListener("click", () => {
-          tasks = tasks.filter((t) => t.id !== task.id);
-          savetasks();
-          li.remove();
-        });
+    //it may throw an error
+    // server/database is always in another continent
 
-        list.appendChild(li);
-  
+    try {
+      const weatherData = await fetchWeatherData(city);
+      displayWeatherData(weatherData);
+    } catch (error) {
+      showError(error.message);
     }
-    function savetasks() {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
+  });
+
+  async function fetchWeatherData(city) {
+    //gets the data
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
+
+    const response = await fetch(url);
+    //const result = await response.json();
+    console.log(typeof response);
+    console.log("RESPONSE", response.status);
+
+    if (!response.ok) {
+      throw new Error("City Not Found");
     }
+
+    const data = await response.json();
+    return data;
+  }
+
+  function displayWeatherData(data) {
+    console.log(data);
+    //display
+    const { name, main, weather } = data;
+    cityNameDisplay.textContent = name;
+    temperatureDisplay.textContent = `Temperature: ${main.temp} `;
+    descriptionDisplay.textContent = `Weather: ${weather[0].description}`;
+
+    //unlock display
+    weatherInfo.classList.remove("hidden");
+    errorMessage.classList.add("hidden");
+  }
+
+  function showError(message) {
+    weatherInfo.classList.add("hidden");
+    errorMessage.classList.remove("hidden");
+     errorMessage.textContent = message || "An error occurred.";
+  }
 });
